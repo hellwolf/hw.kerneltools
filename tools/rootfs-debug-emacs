@@ -1,0 +1,4 @@
+#!/bin/bash
+. $(dirname "$0")/../tools_common.sh
+
+exec emacs --eval "(gdb \"${TOOLSDIR}/rootfs-debug-gud\")"

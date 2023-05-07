@@ -1,0 +1,30 @@
+#!/bin/bash
+. $(dirname "$0")/../tools_common.sh
+
+cd $KDIR
+
+git rev-parse ${DEVEL_BRANCH} &>/dev/null || oops Devel branch ${DEVEL_BRANCH} does not exist
+git rev-parse ${MERGE_BRANCH} &>/dev/null || oops Merge branch ${MERGE_BRANCH} does not exist
+
+# fetch remote branches
+echo '[hwktool update]' Fetch remote branches...
+for i in ${REMOTE_BRANCHES};do
+    echo '[hwktool update]' Fetch remote branch: $i...
+    git rev-parse $i &>/dev/null || oops Remote branch $i does not exist
+    git fetch $i
+done
+
+# merge from remote branches
+echo '[hwktool update]' Merge remote branches to merge branch...
+git checkout ${MERGE_BRANCH}
+git merge ${MERGE_REMOTE_BRANCHES}
+
+echo '[hwktool update]' Merge merge branch to devel branch...
+git checkout ${DEVEL_BRANCH}
+REV1=$(git rev-parse ${DEVEL_BRANCH})
+git merge ${MERGE_BRANCH}
+REV2=$(git rev-parse ${DEVEL_BRANCH})
+
+if [ "$REV1" != "$REV2" ];then
+    [ ! -z "$UPDATE_POSTCMD" ] && $UPDATE_POSTCMD
+fi

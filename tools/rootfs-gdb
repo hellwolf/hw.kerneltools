@@ -1,0 +1,20 @@
+#!/bin/bash
+. $(dirname "$0")/../tools_common.sh
+
+[ -f "$VMLINUX" ] || oops "Kernel image \"$VMLINUX\" not found"
+
+if [ "$TOP_TOOLNAME" == "rootfs-debug-gud" ] || [ "$TOP_TOOLNAME" == "rootfs-debug-emacs" ];then
+    GDB_GDBBIN=gdb
+fi
+
+IFS=$'\n'
+exec ${GDB_GDBBIN:-gdb} \
+    $VMLINUX \
+    $(
+        for s in $GDB_SOURCES;do
+            echo --eval-command
+            echo source $s
+        done
+    ) \
+    --eval-command "target remote tcp:${GDB_HOST}:${GDB_TCPPORT}" \
+    "$@"

@@ -1,0 +1,4 @@
+#!/bin/bash
+. $(dirname "$0")/../tools_common.sh
+
+sudo yum --installroot=$ROOTFS ${ROOTFS_YUM_ARGS} "$@"

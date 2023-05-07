@@ -1,0 +1,13 @@
+#!/bin/sh
+
+HWKTOOLSDIR=$(dirname "$(readlink -f "$0")")
+
+[ "$#" -lt 1 ] && echo Usage: hwktools app args... && exit 1
+APPNAME=$1
+APP=${HWKTOOLSDIR}/tools/${APPNAME}
+shift
+if [ -x "$APP" ];then
+    exec "$APP" "$@"
+else
+    echo hwktool $APPNAME is not found
+fi

@@ -1,0 +1,5 @@
+#!/bin/bash
+. $(dirname "$0")/../tools_common.sh
+
+rm -f $ROOTFS/boot/*
+rm -rf $ROOTFS/lib/modules/*

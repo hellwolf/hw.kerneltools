@@ -1,0 +1,12 @@
+#!/bin/bash
+. $(dirname "$0")/../tools_common.sh
+
+[ $# -lt 1 ] && oops require more than one argument
+KMOD=$1
+shift
+KMODDIR=$KMODSDIR/$KMOD
+[ -d "$KMODDIR" ] || oops kmod $KMOD not exist
+make -C "$KDIR" M="$KMODDIR" O="${OUTPUTDIR}" "$@"
+if [ "$#" == 0 ];then
+  make -C "$KDIR" M="$KMODDIR" O="${OUTPUTDIR}" modules_install
+fi

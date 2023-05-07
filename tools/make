@@ -1,0 +1,4 @@
+#!/bin/bash
+. $(dirname "$0")/../tools_common.sh
+
+make -C "$KDIR" O="${OUTPUTDIR}" "$@"

@@ -1,0 +1,9 @@
+#!/bin/bash
+. $(dirname "$0")/../tools_common.sh
+
+[ -f "$VMLINUZ" ] || oops "Kernel image \"$VMLINUZ\" not found"
+
+qemu ${QEMU_ARGS} \
+  -kernel "$VMLINUZ" \
+  -append "${KERNEL_CMDLINE}" \
+  "$@"

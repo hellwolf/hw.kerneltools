@@ -1,0 +1,5 @@
+#!/bin/bash
+. $(dirname "$0")/../tools_common.sh
+
+make -C "$KDIR" O="${OUTPUTDIR}" INSTALL_PATH=${INSTALL_PATH} install "$@"
+make -C "$KDIR" O="${OUTPUTDIR}" INSTALL_MOD_PATH=${INSTALL_MOD_PATH} modules_install "$@"

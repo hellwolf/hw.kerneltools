@@ -1,0 +1,15 @@
+#!/bin/sh
+
+. $(dirname "$0")/../tools_common.sh
+
+{
+  for v in ${HWKTOOLS_VARS};do
+    echo "(setq hwktools-$v \"${!v}\")"
+  done
+    echo "(defun hwktools-debug ()
+  (interactive)
+  (cd hwktools-PROJECTDIR)
+  (select-frame (make-frame))
+  (gdb \"${TOOLSDIR}/rootfs-debug-gud\")
+  )"
+} > "${1:-/dev/tty}"

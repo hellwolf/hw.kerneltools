@@ -1,0 +1,9 @@
+#!/bin/bash
+. $(dirname "$0")/../tools_common.sh
+
+TOOLSDIR="$(dirname "$0")"
+
+gnome-terminal -t "QEMU - ${DEVNAME}" \
+    -x "${TOOLSDIR}/rootfs-qemu"
+sleep 1
+exec "${TOOLSDIR}"/rootfs-gdb --annotate 3

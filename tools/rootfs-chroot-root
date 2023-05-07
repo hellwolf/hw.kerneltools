@@ -1,0 +1,4 @@
+#!/bin/bash
+. $(dirname "$0")/../tools_common.sh
+
+exec sudo /usr/sbin/chroot "${ROOTFS}"

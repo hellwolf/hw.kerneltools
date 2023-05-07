@@ -1,0 +1,7 @@
+#!/bin/bash
+. $(dirname "$0")/../tools_common.sh
+
+${TOOLSDIR}/rootfs-qemu &
+sleep 1
+gnome-terminal -t "GDB - ${DEVNAME}" --geometry=80x48 \
+  -x "${TOOLSDIR}/rootfs-gdb"
